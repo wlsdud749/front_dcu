@@ -6,6 +6,7 @@ var aa = document.getElementById("aa");
 // DOM 선택 되었는가?
 console.log(clickBtn);
 console.dir(clickBtn);
+//로그 확인용으로  console.log 사용
 // 선택된 DOM 요소에 이벤트 핸들러 걸기
 clickBtn.onclick = function(event) {
     // 클릭이벤트가 발생하면 이벤트를 console에 출력.
