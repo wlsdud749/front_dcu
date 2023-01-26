@@ -16,7 +16,9 @@
         /* Left 는 요소가 레이어여야 적용된다 */
         position: relative;
         left: 0px;
-        transition: left 0.5s;
+        /* transition: left 0.5s, top 0.5s; */
+        transition: all 0.5s;
+        /* 큐빗베이저에서 자신이 원하는 속도 정할 수 있다. */
     }
         /* 0.5초 동안 움직여라 */
 
@@ -37,12 +39,13 @@
 <body>
     <!-- 해당 좌표로 움직이게 만들기 (과제 2023/01/25) -->
     <div id="btnBox">
-    <button class="playBtn1">좌상</button>
-    <button class="playBtn2">우상</button>
-    <button class="playBtn3">좌하</button>
-    <button class="playBtn4">우하</button>
+    <button class="playBtn">좌상</button>
+    <button class="playBtn">우상</button>
+    <button class="playBtn">좌하</button>
+    <button class="playBtn">우하</button>
     <!-- 컴퓨터에서는 좌표체계가 수학과는 반대  -->
     <!-- 클래스일 경우 복수이기 때문에 변수선언에서 복수형 s를 붙여줘야함 -->
+    <!-- 클래스 사용시 클래스 이름 명시 -->
     </div>
 
     
@@ -55,20 +58,21 @@
         var box = document.getElementById("box");
         var color=['blue','orange','brown','pink']
         var playBtnArr = document.getElementsByClassName("playBtn");
-        playBtnArr[0].x=0;
-        playBtnArr[0].y=0;
-        playBtnArr[1].x=200;
-        playBtnArr[1].y=0;
-        playBtnArr[2].x=0;
-        playBtnArr[2].y=200;
-        playBtnArr[2].x=200;
-        playBtnArr[2].y=0;
+        // 클래스 이름이 맞는지 확인 -> 범준샘은 콘솔로 확인을해봄
+        // var posArr=[[0,0],[200,0],[0,200],[200,200]];
+
+        var posArr=[{x:0, y:0},{x:200, y:0},{x:0, y:200},{x:200, y:200}];
+        var cnt=0;
+
         
-        for(var playBtn of playBtnArr) {
-            platBtn.onclick =function(event) {}
-            
+        for(var cnt=0; cnt<playBtnArr.length; cnt++) {
+            playBtnArr[cnt].x=posArr[cnt].x;
+            playBtnArr[cnt].y=posArr[cnt].y;
+            playBtnArr[cnt].onclick =function(event) {
+
             box.style.left=this.x+"px";
-            box.style.left=this.y+"px";
+            box.style.top=this.y+"px";
+            }
         }
     </script>
 </body>
