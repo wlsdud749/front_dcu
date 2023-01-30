@@ -19,16 +19,15 @@
 
     <script>
 
-        // var 또는 function으로 선언하면 최 상위 window의 멤버 필드에 들어간다.
+        // event 핸들러의 첫번째 인자는 event 객체이다.
         function validateForm(form) {
-            //form의 기본은 페이지 전환
-            //이벤트 기본 기능을 일시 중지 할 수 있다.
-            //이벤트는 이벤트 핸드러 함수에서 자동생성 된다.
-            //콘솔창은 확인 후 지워주는 것이 좋다.
-
-            event.preventDefault(); // 일시중지
-            // 이벤트 핸들러가 아니다. this == window
+            form=event.targer;
+            console.log(event.targer)
             
+            if(form == null) {
+                form = this;
+            }
+            event.preventDefault(); // 일시중지
             if(form.subject.value=="") {
                 alert("제목을 입력 하세요.");
                 form.subject.focus();
@@ -42,7 +41,7 @@
             }
 
             if(form.writer.value.length < 2){
-                alert("글자수 확인 (2글자 이상 입력하세요!)")
+                alert("이름 글자수 확인 (2글자 이상 입력하세요!)")
                 form.writer.focus();
                 return;
             }
@@ -51,17 +50,31 @@
             
             form.action="http://www.naver.com";
             form.submit();
-            return;
             
+            
+            //window(문서)가 모두 로드되면 기능이 실행 하도록 이벤트 핸들러 적용.
+            // window.onload = function() {
+            // var form1= document.getElementById("form1");
+            // form1.onsubmit = function() {
+            //     //event 가 발생하면 event 객체가 자동 생성
+            //     event.preventDefault();
+            //     console.log(this == event);
+            //     validateForm(this);
+            // }
+                form1.onsubmit = validateForm; // 참조 시킬 경우엔 괄호 생략. 실행은 괄호 포함.
+                
         }
+    
 
-        
-        console.dir(window);
+
+        // internal 방식으로 변경.
+        // form1의 dom 객체 선택
+        // form1에 이벤트 핸들러 걸기
     </script>
 </head>
     <h1>글쓰기</h1>
     <form action="" id="form1" onsubmit="javascript:validateForm(this)">
-        <!-- 인라인 방식으로도 이벤트 추가 가능 -->
+        <!-- 인라인 방식으로도 이벤트 추가 가능 (꼭 필요한 경우에만 인라인으로 적용해서 사용)-->
         <table>
             <tr>
                 <th>제목</th>
