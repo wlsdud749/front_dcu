@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,25 +15,28 @@
             box-sizing: border-box;
             float: left;
         }
+
         ul {
             width: 2400px;
             height: 400px;
-            border : 0px solid blue;
+            border: 0px solid blue;
             padding: 0;
             margin: 0;
             position: absolute;
             /* transition은 적용 할 속성이 초기화 되어야 한다 */
-            left : 0px;
-            transition: left .5s cubic-bezier(.17,.67,.83,.67);
+            left: 0px;
+            transition: left .5s cubic-bezier(.17, .67, .83, .67);
         }
+
         div#box {
             position: relative;
             border: 1px solid black;
             width: 600px;
             height: 400px;
-            overflow:hidden;
+            overflow: hidden;
         }
-        #box > button {
+
+        #box>button {
             width: 50px;
             height: 40px;
             text-align: center;
@@ -40,21 +44,25 @@
             top: 180px;
             z-index: 1;
         }
-        #rightBtn  {
+
+        #rightBtn {
             left: 550px;
         }
-        #box > div.message {
+
+        #box>div.message {
             position: absolute;
             top: 180px;
             left: 260px;
             display: none;
         }
+
         #box li img {
             width: 600px;
             height: 400px;
         }
     </style>
 </head>
+
 <body>
     <h1>과일</h1>
     <hr>
@@ -77,39 +85,40 @@
         let rightBtn = document.querySelector("#rightBtn");
         let message = document.querySelector("#box > .message");
 
-        let imgs = ["img01","img02","img03","img04"];
+        let imgs = ["img01", "img02", "img03", "img04"];
         boxLis.forEach((item, i) => {
-            item.innerHTML = "<img src='images/"+imgs[i]+".jpg'>";
+            item.innerHTML = "<img src='images/" + imgs[i] + ".jpg'>";
         });
 
         let x = 0;
         let idx = 0;
         let step = -600;
-        rightBtn.addEventListener('click', (e)=>{
+        rightBtn.addEventListener('click', (e) => {
             idx++;
-            if(idx >= 4) {
+            if (idx >= 4) {
                 message.innerText = "마지막입니다!";
                 message.style.display = "block";
-                setTimeout(()=>{message.style.display = "none";}, 1000);
+                setTimeout(() => { message.style.display = "none"; }, 1000);
                 idx = 4;
             } else {
                 x = idx * step;
                 boxUl.style.left = x + "px";
             }
         }, true);
-        leftBtn.addEventListener('click', (e)=>{
+        leftBtn.addEventListener('click', (e) => {
             idx--;
-            if(idx < 0) {
+            if (idx < 0) {
                 message.innerText = "처음입니다!";
                 message.style.display = "block";
-                setTimeout(()=>{message.style.display = "none";}, 1000)
+                setTimeout(() => { message.style.display = "none"; }, 1000)
                 idx = 0;
             } else {
-                idx = idx>=3 ? 2 : idx;
+                idx = idx >= 3 ? 2 : idx;
                 x = idx * step;
                 boxUl.style.left = x + "px";
             }
         }, true);
     </script>
 </body>
+
 </html>
