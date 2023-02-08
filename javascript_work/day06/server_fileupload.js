@@ -27,45 +27,26 @@ app.get("/", function (req, res) {
     res.writeHead(200, { "Content-Type": "text/html; charset=UTF-8" });
     res.write("<h1>Hello World</h1>");
     res.end();
+
     // 오타 있는지 확인
-});
+})
 
 // 업로드 부분
-app.post("/saram/input", (req, res)=>{
+app.post("/saram/input", (req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
-        console.log(">>>>>> (1) ");
-        res.writeHead(200, {"Content-Type":"text/html; charset=UTF-8"});
-        res.write("<h2>upload ok!</h2>");
-        res.end();
-    });
-
-
-        form.on("end", function () {
-
-            // 위에 있는 app.post 에서 rew.end() 가 끝나면 함수 
-            // 실행 하라는 뜻?
-
-            console.log("파일 갯수 : ", this.openedFiles.length);
-            for(var i=0; i<this.openedFiles.length; i++) {
-                let file = this.openedFiles[i];
-                console.dir(file);
-                var oldpath = file.filepath;
-                var newpath = './public/upload' + file.originalFilename;
-                fs.rename(oldpath, newpath, function (err) {
-
-                    // Node.js 내장되어 있는 fs
-                    
-                    if (err) throw err;
-                    res.write('File uploaded and moved!');
-                    res.end();
-                });
-            }
+        var oldpath = files.photo.filepath;
+        // oldpath 경로 잘 확인
+        var newpath = './public/upload/' + files.photo.originalFilename;
+        // newpath 경로 잘 확인
+        fs.rename(oldpath, newpath, function (err) {
+            // oldpath 의 경로을 newpath 의 경로로 변경하고 이름도 변경한다? 
+            if (err) throw err;
+            res.write('File uploaded and moved!');
+            res.end();
         });
     });
-
-
-
+});
 
 
 
@@ -76,3 +57,5 @@ const server = http.createServer(app);
 server.listen(app.get("port"), () => {
     console.log("서버 실행 중 - http://localhost:" + app.get("port"));
 });
+
+

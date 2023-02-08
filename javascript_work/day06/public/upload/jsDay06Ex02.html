@@ -30,11 +30,32 @@
         var preview = document.querySelector("#preview");
         var photo = document.querySelector("#photo");
 
+        inputForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            // ajax로 전송하기
+
+            let xhr = new XMLHttpRequest();
+            let formData = new FormData(event.target);
+
+            xhr.onload = (event) => {
+                var resTxt = event.target.responseText;
+                console.log("전송 완료 - 결과 확인 : ",resTxt );
+            }
+
+            xhr.open("POST", "/saram/input", true);
+            // Data가 FormData 로 바뀌었으므로
+            // "Content-Type", "multipart/form-data" 쓰지 않아야한다
+            // xhr.setRequestHeader("Content-Type", "multipart/form-data");
+            // AJAX 함수? JSON 함수 ?? 뭔지 모르겠다 -> w3schools 에서 참고했음 (범준샘)
+            xhr.send(formData);
+        });
+
+
         photo.addEventListener("change", (event) => {
             let input = event.target;
             // FileReader - 비동기 형태로 파일을 읽어오는 객체.
             preview.innerHTML = "";
-            for (var i = 0; i<input.files.length; i++) {
+            for (var i = 0; i < input.files.length; i++) {
                 if (input.files && input.files[i]) {
                     let reader = new FileReader();
 
