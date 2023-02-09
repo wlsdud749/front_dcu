@@ -31,7 +31,7 @@ app.get("/", (req, res)=>{
 // 목록
 var carList = [];
 for(var i=0; i<10; i++) {
-    carList.push({no:i, name:"car name "+i, price: (1+i)*1000, year:2008+i, company:"company"+i});
+    carList.push({no:i+10, name:"car name "+i, price: (1+i)*1000, year:2008+i, company:"company"+i});
 }
 let no = 10;
 // GET 요청 처리 - SELECT 기능

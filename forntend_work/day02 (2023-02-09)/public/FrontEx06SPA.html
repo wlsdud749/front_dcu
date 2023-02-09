@@ -66,13 +66,21 @@
     <div id="carListBox"></div>
 
     <script>
+        var carListArr = [];
+
+
         function drawList(carList) {
+            carListArr = carList;
             var complie = _.template($("#carListTmp").html());
             var html = complie({carList});
             $("#carListBox").html(html);
 
             $("button.modifyBtn").click(function() {
+                let no = parseInt($(this).data("no"));
                 console.log("modify no => ", $(this).data("no"));
+                console.log(carListArr.findindex(function(carData){
+                    return carData.no == no;
+                }));
             });
 
             $("button.delBtn").on("click", function() {
