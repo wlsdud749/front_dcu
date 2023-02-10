@@ -5,6 +5,10 @@ const cors = require("cors");
 // npm i -S formidable
 const formidable = require('formidable');
 const fs = require("fs");
+// npm i -S axios
+const axios = require("axios");
+const cheerio = require("cheerio");
+const iconv = require("iconv-lite");
 
 // app.set("key", "value")  - setAttribute 용도로 사용
 // app.get("key");  - getAttribute의 용도로 사용
@@ -26,6 +30,24 @@ app.get("/", (req, res)=>{
     res.writeHead(200, {"Content-Type":"text/html; charset=UTF-8"});
     res.write("<h1>Hello world</h1>");
     res.end();
+});
+
+// http://localhost:5000/axios_get
+app.get("/axios_get", (req, res)=>{
+    let getUrlVal = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=105";
+    axios.get(getUrlVal, {}, {withCredentials: true}).then((response)=>{
+        //console.log(response.data);
+        //res.send(response.data);
+        //res.end(response.data);
+        let htmlContent = response.data;
+        let htmlCMD = iconv.decode(htmlContent,"EUC-KR").toString();
+        const $ = cheerio.load(htmlCMD);
+        // div.list_body div.cluster
+        let cluster =  $("div.list_body div.cluster a");
+        console.log(cluster.html());
+
+        res.end();
+    });
 });
 
 // 목록
@@ -88,9 +110,6 @@ app.post("/saram/input", (req, res)=>{
         }
     });
 });
-
-
-
 
 // http와 express의 결합 - 같은 port를 공유한다.
 const server = http.createServer(app);

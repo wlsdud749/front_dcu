@@ -13,7 +13,8 @@
     <h1>리액트 공부하기</h1>
     <script>
         
-        let getUrlVal = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=105";
+        // axios가 잘 되는가?
+        let getUrlVal = "http://localhost:5000/axios_get";
         axios.get(getUrlVal, {}, {withCredentials: true}).then((response)=>{
             console.log(response.data);
         });
