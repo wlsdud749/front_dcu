@@ -1,40 +1,32 @@
 import React, { useState } from 'react';
 import "./App.css";
 
-function ItemRow({ item, removeItem }) {
+function ItemRow({ item }) {
   return (
     <li>
       <p>
         <input type="checkbox" />
         <input type="text" value={item.title} disabled />
-        <button
-          onClick={(e) => {
-            removeItem(item.no);
-          }}>
-            삭제
-            </button>
+        <button>삭제</button>
       </p>
       {/* p태그 하나의 문단을 만들 때 사용 */}
     </li>
   );
 }
 
-function InputItem({ appendItem }) {
-  const [newWork, setNewWork] = useState("");
+function InputItem() {
+  const [newWork, setNewWork] = useState();
   return (
     <div>
-      할일 :
-      <input
-        type="text"
-        value={newWork}
-        onChange={(e) => {
-          setNewWork(e.target.value);
-        }}
-      />
-      <button
-        onClick={(e) => {
-          appendItem(newWork);
-        }}>추가</button>
+      할일 : 
+      <input 
+      type="text" 
+      value={newWork} 
+      onChange={(e)=>{
+        setNewWork(e.target.value);
+        console.log(e.target.value);
+      }}  />
+      <button>추가</button>
     </div>
   )
 }
@@ -50,8 +42,9 @@ function TodoList({ todoList }) {
     </div>
   );
 }
-
+let noCount = 5;
 function App(props) {
+  const [newWork, setNewWork] = useState();
   const [todoList, setTodoList] = useState([
     { no: 1, title: "점심 먹기", done: false },
     { no: 2, title: "산책 먹기", done: false },
@@ -59,20 +52,19 @@ function App(props) {
     { no: 4, title: "내일 수업 예습하기", done: false },
   ]);
   // 비동기 때문에 쓴디 - 성민
-  const [noCount, setNoCount] = useState(5);
-
-
+  const [noCount,setNoCount] = useState(5);
+  
+  
   //추가부분
   function appendItem(newItem) {
     console.log(noCount);
-    setTodoList([...todoList, { no: noCount, title: newItem, done: false }]);
-    setNoCount(noCount + 1);
+    setTodoList(...todoList, { no: noCount++, title: newItem, done: false });
+    setNoCount(noCount+1);
   }
-
-
-  function removeItem(no) {
-    var newList = todoList.filter((item, idx) => {
-      return item.no != no;
+  
+  function removdItem(no) {
+    var newList = todoList.filter((item,idx)=>{
+      return item.no !=no;
     });
     setTodoList(newList);
   }
@@ -87,9 +79,10 @@ function App(props) {
         <button>삭제</button>
       </li>
       > 함수 선언하여 사용하자 */}
-        <InputItem appendItem={appendItem} />
+        <InputItem appendItem={appendItem}/>
         <hr />
-        <TodoList todoList={todoList} removeItem={removeItem} />
+        <TodoList todoList={todoList} />
+        <removdItem removdItem={removdItem} />
       </div>
 
     </>

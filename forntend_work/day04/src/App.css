@@ -4,3 +4,7 @@ input[disabled] {
     background-color: white;
 
 }
+
+input.done {
+    text-decoration: line-through;
+}
